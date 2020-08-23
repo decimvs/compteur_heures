@@ -1,0 +1,52 @@
+﻿<Window x:Class="HeuresJournee.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HeuresJournee"
+        xmlns:Properties="clr-namespace:HeuresJournee.Properties"
+        xmlns:staticData="clr-namespace:HeuresJournee"
+        mc:Ignorable="d"
+        Title="Mon compteur d'heures" Height="341.363" Width="606.183" DataContext="{x:Static Properties:Settings.Default}" Closed="Window_Closed" Icon="Resources/icons8-future-40.png">
+    <Window.Resources>
+        <staticData:TypesPointage x:Key="TypesPointage" />
+    </Window.Resources>
+    <Grid>
+        <DataGrid x:Name="dgPointages" HorizontalAlignment="Left" Height="271" Margin="10,10,0,0" VerticalAlignment="Top" Width="304" AutoGenerateColumns="False" AddingNewItem="dgPointages_AddingNewItem" RowEditEnding="dgPointages_RowEditEnding" KeyUp="dgPointages_KeyUp" PreviewKeyUp="dgPointages_PreviewKeyUp">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Temps, StringFormat=H:mm}" Header="Heure" Width="150"/>
+                <DataGridTemplateColumn Header="Type" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TypePointage}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                    <DataGridTemplateColumn.CellEditingTemplate>
+                        <DataTemplate>
+                            <ComboBox Height="22" SelectedItem="{Binding TypePointage}" ItemsSource="{StaticResource TypesPointage}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellEditingTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Margin="334,10,0,0" Orientation="Vertical" HorizontalAlignment="Left" Width="198" Height="275" VerticalAlignment="Top">
+            <Label x:Name="label1_Copy" Content="Heures realisées aujourd'hui :" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Label x:Name="lblWorkTime" Content="0:00" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label x:Name="label1_Copy1" Content="Heures manquantes aujourd'hui :" HorizontalAlignment="Left" Margin="0,5,-0.2,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Label x:Name="lblHeuresManquantes" Content="0:00" HorizontalAlignment="Center" Margin="0,5,0,0" VerticalAlignment="Top" FontSize="18"/>
+            <Label x:Name="label1_Copy2" Content="Date : " HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold"/>
+
+            <DatePicker x:Name="dtpDate" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label1" Content="Heures à réaliser par jour : " HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" Margin="0,15,0,0"/>
+            <TextBox x:Name="txtHoursNeeded" Text="{Binding Default.heuresParJour}" HorizontalAlignment="Center" Height="23" Margin="0,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="161" TextChanged="txtHoursNeeded_TextChanged"/>
+        </StackPanel>
+        <Button x:Name="button" HorizontalAlignment="Left" Margin="549,16,0,0" VerticalAlignment="Top" Width="34" Click="button_Click">
+            <Image x:Name="image" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="32" Source="Resources/icons8-circled-menu-96.png"/>
+            <Button.ContextMenu>
+                <ContextMenu>
+                    <MenuItem x:Name="mnitAPropos" Header="A propros" Click="mnitAPropos_Click" />
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
+    </Grid>
+</Window>
